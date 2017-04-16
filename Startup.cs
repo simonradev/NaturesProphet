@@ -23,7 +23,7 @@
             field = new int[rowsOfTheField, colsOfTheField];
 
             allSeedPositions = new List<Position>();
-            ReadTheSeedPositions();
+            GetTheSeedPositions();
 
             GrowTheSeeds();
 
@@ -39,24 +39,21 @@
                 {
                     result.Append(field[row, col]);
 
-                    if (CheckIfAPlaceIsNotInTheEndOfADimension(col, 1))
-                    {
-                        result.Append(" ");
-                    }
+                    AppendStringIfPossible(col, 1, result, " ");
                 }
 
-                if (CheckIfAPlaceIsNotInTheEndOfADimension(row, 0))
-                {
-                    result.AppendLine();
-                }
+                AppendStringIfPossible(row, 0, result, Environment.NewLine);
             }
 
             Console.WriteLine(result);
         }
 
-        private static bool CheckIfAPlaceIsNotInTheEndOfADimension(int place, int dimension)
+        private static void AppendStringIfPossible(int place, int dimension, StringBuilder sb, string toBeAppended)
         {
-            return place + 1 != field.GetLength(dimension);
+            if (place + 1 != field.GetLength(dimension))
+            {
+                sb.Append(toBeAppended);
+            }
         }
 
         private static void GrowTheSeeds()
@@ -137,7 +134,7 @@
             return positionAreTheSame;
         }
 
-        private static void ReadTheSeedPositions()
+        private static void GetTheSeedPositions()
         {
             string stopCommand = "Bloom Bloom Plow";
 
